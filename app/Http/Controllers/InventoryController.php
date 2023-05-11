@@ -14,10 +14,15 @@ use Illuminate\Support\Facades\View;
 class InventoryController extends Controller
 {
     public function index() {
+        $clients = OPCenterClient::get()->toArray();
+        return view("index", compact('clients'));
+    }
+
+    public function export($id) {
         $date = now()->toDateString();
         $time = now()->toTimeString();
 
-        $clientData = OPCenterClient::with('inventory')->first()->toArray();
+        $clientData = OPCenterClient::with('inventory')->where('client_id', $id)->first()->toArray();
         
         $onHandColumn = array_column($clientData['inventory'], 'on_hand');
         $totalOnHand = array_sum($onHandColumn);
@@ -38,10 +43,10 @@ class InventoryController extends Controller
         $pdf->setPaper('A4');
         $pdf->render();
 
-        $fileName = 'export.pdf';
+        $fileName = 'export_'.$clientData['client_name'].'.pdf';
         $filePath = 'public/downloads/' . $fileName;
         Storage::put($filePath, $pdf->output());
 
-        return $pdf->stream('export.pdf');
+        return $pdf->stream('export_'.$clientData['client_name'].'.pdf');
     }
 }

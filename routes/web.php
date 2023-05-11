@@ -14,8 +14,6 @@ use App\Http\Controllers\InventoryController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/test', [InventoryController::class, 'index']);
+Route::get('/', [InventoryController::class, 'index']);
+Route::get('/export/{id}', [InventoryController::class, 'export']);
