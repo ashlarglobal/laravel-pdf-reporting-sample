@@ -23,7 +23,7 @@
                 <tr>
                     <td>{{ $index++ }}</td>
                     <td>{{ $client['client_name'] }}</td>
-                    <td><a href="/test/{{ $client['client_id'] }}" class="btn btn-success">Export Report</a></td>
+                    <td><a href="/export/{{ $client['client_id'] }}" class="btn btn-success">Export Report</a></td>
                 </tr>
                 @endforeach
             </tbody>
