@@ -22,15 +22,17 @@ class InventoryController extends Controller
         $date = now()->toDateString();
         $time = now()->toTimeString();
 
-        $clientData = OPCenterClient::with('inventory')->where('client_id', $id)->first()->toArray();
+        $clientData = OPCenterClient::with(['inventories' => function($q){
+            $q->where('active', 1)->where('non_stocking', 0);
+        }])->where('client_id', $id)->first()->toArray();
         
-        $onHandColumn = array_column($clientData['inventory'], 'on_hand');
+        $onHandColumn = array_column($clientData['inventories'], 'on_hand');
         $totalOnHand = array_sum($onHandColumn);
         
-        $availableColumn = array_column($clientData['inventory'], 'available');
+        $availableColumn = array_column($clientData['inventories'], 'available');
         $totalAvailable = array_sum($availableColumn);
         
-        $allocatedColumn = array_column($clientData['inventory'], 'allocated');
+        $allocatedColumn = array_column($clientData['inventories'], 'allocated');
         $totalAllocated = array_sum($allocatedColumn);
         
         $data = [ 'data' => $clientData, 'totalOnHand' => $totalOnHand, 'totalAvailable' => $totalAvailable, 'totalAllocated' => $totalAllocated, 'date' => $date, 'time' => $time];
