@@ -5,14 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Inventory;
 use App\Models\OPCenterClient;
-use Illuminate\Support\Facades\Storage;
-use PDF;
-
-use Dompdf\Dompdf;
-use Illuminate\Support\Facades\View;
+use App\Services\ExportPDFService;
 
 class InventoryController extends Controller
 {
+    private $exportPDFService;
+    public function __construct(ExportPDFService $exportPDFService)
+    {
+        $this->exportPDFService = $exportPDFService;
+    }
+
     public function index() {
         $clients = OPCenterClient::get()->toArray();
         return view("index", compact('clients'));
@@ -21,6 +23,8 @@ class InventoryController extends Controller
     public function export($id) {
         $date = now()->toDateString();
         $time = now()->toTimeString();
+
+        $param = request()->view;
 
         $clientData = OPCenterClient::with(['inventories' => function($q){
             $q->where('active', 1)->where('non_stocking', 0);
@@ -37,18 +41,11 @@ class InventoryController extends Controller
         
         $data = [ 'data' => $clientData, 'totalOnHand' => $totalOnHand, 'totalAvailable' => $totalAvailable, 'totalAllocated' => $totalAllocated, 'date' => $date, 'time' => $time];
 
-        $html = View::make('pdf.export', $data)->render();
+        if($param == "true"){
+            return view('pdf.export', $data);
+        } else{
+            $this->exportPDFService->exportPDF($data);
+        }
 
-        $pdf = new Dompdf();
-
-        $pdf->loadHtml($html);
-        $pdf->setPaper('A4');
-        $pdf->render();
-
-        $fileName = 'export_'.$clientData['client_name'].'.pdf';
-        $filePath = 'public/downloads/' . $fileName;
-        Storage::put($filePath, $pdf->output());
-
-        return $pdf->stream('export_'.$clientData['client_name'].'.pdf');
     }
 }
