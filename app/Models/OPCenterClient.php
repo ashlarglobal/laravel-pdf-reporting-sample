@@ -12,8 +12,7 @@ class OPCenterClient extends Model
 
     protected $table = "opcenter_client";
 
-    public function inventory()
-    {
-        return $this->hasMany(Inventory::class, 'client_id', 'client_id')->where('active', 1)->where('non_stocking', 0);
+    public function inventories() {
+        return $this->hasMany(Inventory::class, 'client_id', 'client_id');
     }
 }
