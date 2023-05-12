@@ -21,9 +21,12 @@
             <tbody>
                 @foreach($clients as $index => $client)
                 <tr>
-                    <td>{{ $index++ }}</td>
+                    <td>{{ $index+1 }}</td>
                     <td>{{ $client['client_name'] }}</td>
-                    <td><a href="/export/{{ $client['client_id'] }}" class="btn btn-success">Export Report</a></td>
+                    <td>
+                        <a href="/export/{{ $client['client_id'] }}?view=true" class="btn btn-info text-white" target="_blank">View Report</a>
+                        <a href="/export/{{ $client['client_id'] }}" class="btn btn-success" target="_blank">Export Report</a>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
