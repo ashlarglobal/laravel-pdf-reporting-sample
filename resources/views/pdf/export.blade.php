@@ -35,8 +35,32 @@
                 margin-bottom: 20px;
             }
 
-            .cell1 {
+            .cell {
                 border: 1px solid #000;
+            }
+
+            .w10 {
+                width: 10%;
+            }
+
+            .w15 {
+                width: 15%;
+            }
+
+            .w45 {
+                width: 45%;
+            }
+
+            .w70 {
+                width: 70%
+            }
+
+            .text-center {
+                text-align: center;
+            }
+
+            .text-bold {
+                font-weight: bold;
             }
         </style>
     </head>
@@ -44,16 +68,16 @@
     <table class="table1">
         <thead>
             <tr>
-                <td class="cell1" style="width: 15%;">
+                <td class="cell w15">
                     Date: {{ $date }} <br>
                     Time: {{ $time }} <br>
                     Page: 1
                 </td>
-                <td class="cell1" style="width: 70%; text-align: center;">
+                <td class="cell w70 text-center">
                     <h3 style="margin-bottom: -10px; margin-top: 5px;">{{ $data['client_name'] }}</h3>
                     <h3 style="margin-bottom: 5px">Good inventories Summary</h3>
                 </td>
-                <td class="cell1" style="width: 15%;">
+                <td class="cell w15">
                 </td>
             </tr>
         </thead>
@@ -63,9 +87,9 @@
     <table class="table1" style="margin-top: 10px">
         <thead>
             <tr>
-                <td class="cell1" style="width: 45%; text-align: center;"><p>All Active Stock, Items</p></td>
-                <td class="cell1" style="width: 45%; text-align: center;"></td>
-                <td class="cell1" style="width: 10%; text-align: center;">User: CJ</td>
+                <td class="cell w45 text-center"><p>All Active Stock, Items</p></td>
+                <td class="cell w45 text-center"></td>
+                <td class="cell w10 text-center">User: CJ</td>
             </tr>
         </thead>
     </table>
@@ -99,7 +123,7 @@
             </tr>
             @endforeach 
             <tr>
-                <td colspan="3" style="font-weight: bold;">Totals</td>
+                <td colspan="3" class="text-bold">Totals</td>
                 <td>{{ $totalOnHand }}</td>
                 <td>{{ $totalAvailable }}</td>
                 <td>{{ $totalAllocated }}</td>
