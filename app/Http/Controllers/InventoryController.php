@@ -42,7 +42,7 @@ class InventoryController extends Controller
         $data = [ 'data' => $clientData, 'totalOnHand' => $totalOnHand, 'totalAvailable' => $totalAvailable, 'totalAllocated' => $totalAllocated, 'date' => $date, 'time' => $time];
 
         if($param == "true"){
-            return view('pdf.export', $data);
+            return view('pdf.view', $data);
         } else{
             $this->exportPDFService->exportPDF($data);
         }

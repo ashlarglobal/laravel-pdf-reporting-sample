@@ -17,10 +17,10 @@ class ExportPDFService
         $pdf->setPaper('A4');
         $pdf->render();
         
-        $fileName = 'export_'.str_replace(':','',(string)$data['time']).'.pdf';
+        $fileName = (string)$data['data']['client_name'].str_replace(':','',(string)$data['time']).'.pdf';
         $filePath = 'public/downloads/' . $fileName;
         Storage::put($filePath, $pdf->output());
         
-        return $pdf->stream('export_'.str_replace(':','',(string)$data['time']).'.pdf');
+        return $pdf->stream((string)$data['data']['client_name'].str_replace(':','',(string)$data['time']).'.pdf');
     }
 }
