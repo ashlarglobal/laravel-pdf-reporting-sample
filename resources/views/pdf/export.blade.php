@@ -50,7 +50,7 @@
                     Page: 1
                 </td>
                 <td class="cell1" style="width: 70%; text-align: center;">
-                    <h3 style="margin-bottom: -15px; margin-top: 5px;">{{ $data['client_name'] }}</h3>
+                    <h3 style="margin-bottom: -10px; margin-top: 5px;">{{ $data['client_name'] }}</h3>
                     <h3 style="margin-bottom: 5px">Good inventories Summary</h3>
                 </td>
                 <td class="cell1" style="width: 15%;">
